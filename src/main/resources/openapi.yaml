@@ -1,0 +1,198 @@
+openapi: 3.1.0
+info:
+  contact:
+    name: Martin Burbach
+  description: Simple Book Api to manage books and authors
+  title: Book API
+  version: "1.0"
+servers:
+- url: http://localhost:3000
+tags:
+- name: Author
+- name: Book
+paths:
+  /books:
+    get:
+      description: Get list of all books
+      operationId: get-books
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                  - id: 0
+                    title: Just for Fun
+                    pageCount: 0
+                    isbn: 1234-1234-12345
+                    author:
+                    - id: 0
+                      firstname: Linus
+                      lastname: Torvalds
+              schema:
+                items:
+                  $ref: '#/components/schemas/Book'
+          description: OK
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+        "501":
+          description: Not Implemented
+      summary: Your GET endpoint
+      tags:
+      - Book
+      x-accepts: application/json
+      x-tags:
+      - tag: Book
+    post:
+      description: Update Books
+      operationId: post-books
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Example 1:
+                value:
+                - id: 0
+                  firstname: Linus
+                  lastname: Torvalds
+            schema:
+              items:
+                $ref: '#/components/schemas/Author'
+      responses:
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+        "501":
+          description: Not Implemented
+      summary: ""
+      tags:
+      - Book
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: Book
+  /book:
+    delete:
+      description: Remove specific book
+      operationId: delete-book
+      parameters:
+      - description: id of specifc book
+        explode: true
+        in: query
+        name: bookId
+        required: false
+        schema: {}
+        style: form
+      responses:
+        "200":
+          description: OK
+      summary: ""
+      tags:
+      - Book
+      x-accepts: application/json
+      x-tags:
+      - tag: Book
+    get:
+      description: Get specific book
+      operationId: get-book
+      parameters:
+      - explode: true
+        in: query
+        name: bookId
+        required: false
+        schema: {}
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 0
+                    title: Just for Fun
+                    pageCount: 0
+                    isbn: 1234-1234-12345
+                    author:
+                    - id: 0
+                      firstname: Linus
+                      lastname: Torvalds
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: OK
+      summary: Your GET endpoint
+      tags:
+      - Book
+      x-accepts: application/json
+      x-tags:
+      - tag: Book
+  /author:
+    get:
+      description: Get Author
+      operationId: get-author
+      parameters:
+      - explode: true
+        in: query
+        name: authorId
+        required: false
+        schema: {}
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: 0
+                    firstname: Linus
+                    lastname: Torvalds
+              schema:
+                $ref: '#/components/schemas/Author'
+          description: OK
+      summary: Your GET endpoint
+      tags:
+      - Author
+      x-accepts: application/json
+      x-tags:
+      - tag: Author
+components:
+  schemas:
+    Book:
+      example:
+        pageCount: ""
+        author: ""
+        isbn: ""
+        id: ""
+        title: ""
+      properties:
+        id: {}
+        title: {}
+        pageCount: {}
+        isbn: {}
+        author:
+          items:
+            $ref: '#/components/schemas/Author'
+      title: Book
+    Author:
+      example:
+        firstname: ""
+        id: ""
+        lastname: ""
+      properties:
+        id: {}
+        firstname: {}
+        lastname: {}
+      title: Author
