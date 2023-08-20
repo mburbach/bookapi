@@ -3,6 +3,7 @@ package com.dTale.api;
 import com.dTale.model.Author;
 
 
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -43,4 +44,13 @@ public class AuthorApiController implements AuthorApi {
         return Optional.ofNullable(request);
     }
 
+    @Override
+    public ResponseEntity<Author> getAuthor(Object authorId) {
+        Author author = new Author();
+        author.setId(JsonNullable.of(1));
+        author.setFirstname(JsonNullable.of("Linus"));
+        author.setLastname(JsonNullable.of("Torvalds"));
+
+        return ResponseEntity.ok( author );
+    }
 }
